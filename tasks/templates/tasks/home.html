@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="card shadow p-4">
+
+    <!-- Header -->
+    <div class="d-flex justify-content-between mb-3">
+        <h5>Welcome, {{ request.user.username }}</h5>
+        <a href="{% url 'logout' %}" class="btn btn-danger btn-sm">Logout</a>
+    </div>
+
+    <h2 class="text-center mb-4">📝 Task Manager</h2>
+
+    <!-- ✅ Dashboard (MOVED OUTSIDE LOOP) -->
+    <div class="mb-4 text-center">
+        <span class="badge bg-dark">Total: {{ total }}</span>
+        <span class="badge bg-success">Completed: {{ completed }}</span>
+        <span class="badge bg-secondary">Pending: {{ pending }}</span>
+    </div>
+
+    <!-- Add Task -->
+    <form method="POST" class="d-flex gap-2 mb-3">
+        {% csrf_token %}
+        <input type="text" name="title" class="form-control" placeholder="Enter task">
+        <button class="btn btn-dark">Add</button>
+    </form>
+
+    <!-- Search -->
+<div class="d-flex gap-2 mb-3">
+    <form method="GET" class="flex-grow-1">
+        <input type="text" name="q" placeholder="Search tasks" class="form-control">
+    </form>
+
+    <a href="/" class="btn btn-dark">Reset</a>
+</div>
+    <!-- Task List -->
+    <ul class="list-group">
+        {% for task in tasks %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+
+                <!-- Task title -->
+                <span>
+                    {% if task.completed %}
+                        <strike>{{ task.title }}</strike>
+                    {% else %}
+                        {{ task.title }}
+                    {% endif %}
+                </span>
+
+                <!-- Actions -->
+                <div>
+                    {% if task.completed %}
+                        <a href="{% url 'complete' task.id %}" class="btn btn-secondary btn-sm">↺</a>
+                    {% else %}
+                        <a href="{% url 'complete' task.id %}" class="btn btn-success btn-sm">✓</a>
+                    {% endif %}
+                    <a href="{% url 'edit' task.id %}" class="btn btn-warning btn-sm">✏️</a>
+                    <a href="{% url 'delete' task.id %}" class="btn btn-danger btn-sm">✕</a>
+                </div>
+
+            </li>
+        {% empty %}
+            <li class="list-group-item text-center text-muted">
+                No tasks yet 👀
+            </li>
+        {% endfor %}
+    </ul>
+
+</div>
+
+{% endblock %}
