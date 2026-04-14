@@ -27,7 +27,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-n&^o0ud+s$%w@kffak%y*
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = ['taskmanager-lwfl.onrender.com', 'localhost', '127.0.0.1'] 
+ALLOWED_HOSTS = ['myproject-wlh1.onrender.com', 'localhost', '127.0.0.1'] 
 
 
 # Application definition
@@ -80,7 +80,7 @@ DATABASES = {
     'default': dj_database_url.config(default='sqlite:///db.sqlite3')
 }
 
-CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:8000', 'http://localhost:8000']
+CSRF_TRUSTED_ORIGINS = ['https://myproject-wlh1.onrender.com', 'http://127.0.0.1:8000', 'http://localhost:8000']
 
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = '/'
